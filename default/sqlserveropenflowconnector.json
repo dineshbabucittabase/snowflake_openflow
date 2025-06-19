@@ -11,7 +11,37 @@
   "flowContents" : {
     "comments" : "0.9.0-c79f9bb",
     "componentType" : "PROCESS_GROUP",
-    "connections" : [ ],
+    "connections" : [ {
+      "backPressureDataSizeThreshold" : "1 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "5ce8964e-71c3-30ec-9ff2-ef699a181496",
+        "name" : "AbortQueryJob",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "14dc561f-00dd-3c37-830a-c034ee57a330",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "951bf6e0-ee14-325c-ab3e-8df08388f43e",
+        "name" : "GenerateFlowFile",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 1
+    } ],
     "controllerServices" : [ {
       "bulletinLevel" : "WARN",
       "bundle" : {
@@ -6999,7 +7029,57 @@
       "statelessFlowTimeout" : "1 min"
     } ],
     "processors" : [ {
-      "autoTerminatedRelationships" : [ "success" ],
+      "autoTerminatedRelationships" : [ "comms.failure", "failure", "success" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "runtime-salesforce-processors-nar",
+        "group" : "com.snowflake.openflow.runtime",
+        "version" : "2025.6.17.20"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "5ce8964e-71c3-30ec-9ff2-ef699a181496",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "AbortQueryJob",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -240.0,
+        "y" : 272.0
+      },
+      "properties" : {
+        "Job ID" : "${jobId}"
+      },
+      "propertyDescriptors" : {
+        "Job ID" : {
+          "displayName" : "Job ID",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Job ID",
+          "sensitive" : false
+        },
+        "Salesforce Client" : {
+          "displayName" : "Salesforce Client",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "Salesforce Client",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "com.snowflake.openflow.runtime.processors.salesforce.AbortQueryJob",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
       "backoffMechanism" : "PENALIZE_FLOWFILE",
       "bulletinLevel" : "WARN",
       "bundle" : {
@@ -7225,6 +7305,6 @@
   "snapshotMetadata" : {
     "author" : "DINESH",
     "flowIdentifier" : "sqlserveropenflowconnector",
-    "timestamp" : 1750327177438
+    "timestamp" : 1750328717910
   }
 }
